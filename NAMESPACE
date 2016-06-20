@@ -1,1 +1,4 @@
 exportPattern("^[[:alpha:]]+")
+importFrom("graphics", "abline", "legend", "lines", "plot", "points")
+importFrom("stats", "coefficients", "lm", "predict", "quantile", "sd")
+importFrom("utils", "read.table")

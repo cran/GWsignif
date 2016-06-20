@@ -2,17 +2,17 @@
 \alias{GWsignif-package}
 \docType{package}
 \title{
-Genome-wide significance for whole genome sequencing studies
+Estimating Genome-Wide Significance for Whole Genome Sequencing Studies, Either Single SNP Tests or Region-Based Tests
 }
 \description{
-Estimate genome-wide significance using extrapolation approach: estimate significance thresholds in small regions and then extrapolate a large region significance threshold.
+The correlations and linkage disequilibrium between tests can vary as a function of minor allele frequency thresholds used to filter variants, and also varies with different choices of test statistic for region-based tests. Appropriate genome-wide significance thresholds can be estimated empirically through permutation on only a small proportion of the whole genome. 
 }
 \details{
 \tabular{ll}{
 Package: \tab GWsignif\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-01-14\cr
+Version: \tab 1.1\cr
+Date: \tab 2016-06-19\cr
 License: \tab GLP 2.0 or greater\cr
 }
 }

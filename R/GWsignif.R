@@ -1,6 +1,7 @@
 GWsignif <-
-function(pvalues, ngroup = 5, ntest.genome, alpha = 0.05, plot.figure = TRUE)
+function(pvalues, ntest.genome, K = 5, alpha = 0.05, plot.figure = TRUE)
 {
+ngroup <- K
 if (is.character(pvalues)) {
 pvalues.files <- pvalues
 pvaluesWasImported <- FALSE
@@ -16,16 +17,13 @@ pvalues.files <- "pvaluesWasImported"
 pvaluesWasImported <- TRUE
 }
 
-#ntest.genome
 if (missing(ntest.genome)) ntest.genome <- ntest.region
 ntest.genome <- max(ntest.genome, ntest.region)
 
-#modify ngroup
 ngroup <- min(ngroup, floor(1 + log(ntest.region)/log(4))) 
 m1 <- ceiling(ntest.region/(2^(ngroup-1))) 
 stopifnot(ngroup > 1)
 
-#minimum pvalues in group 1 
 minp <- matrix(NA, nrow(pvalues), 2^(ngroup-1))
 pval0 <- NULL
 testj <- 0
@@ -53,7 +51,6 @@ minp[,testj] <- apply(pvalues[, max(1, ncol(pvalues) - m1 +1):ncol(pvalues), dro
 
 stopifnot(testj == 2^(ngroup-1))
 
-#quantile of minimum pvalues: significance threshold
 qminp <- list()
 qminp[[1]] <- apply(minp, 2, quantile, prob = alpha)
 k <- 2
@@ -65,8 +62,6 @@ k <- k + 1
 minp <- pmin(minp[,1], minp[,2])
 qminp[[k]] <- quantile(minp, prob = alpha)
 
-#number of tests, mean and standard error of -log10(qminp)
-#bonf: –log10 of Bonferroni correction
 ntest <- c(m1*2^(0:(ngroup-2)), ntest.region)
 x <-  - log10(alpha/ntest) 
 logqminp <- lapply(qminp, log10)
@@ -75,7 +70,6 @@ ysd <- unlist(lapply(logqminp, sd))
 
 mlogq <- cbind(ntest =  ntest,  bonf = x,mean = y, sd = ysd)
 
-#linear model
 fit<- lm(y ~ x)
 xgw <- - log10(alpha/ntest.genome)
 ygw <- predict(fit, new=data.frame(x = xgw))
@@ -84,7 +78,6 @@ signifgw <- as.numeric(10^(-ygw))
 cat(paste0("\nThe number of tests in a large genome-wide region of interest: ntest.genome=", ntest.genome, 
 ".\nThe significance threshold in the large genome-wide region: GWsignif.threshold=", signif(signifgw), ".\n"))
 
-#plot model fitting
 if (plot.figure) 
 {
 qk <- unlist(qminp)
