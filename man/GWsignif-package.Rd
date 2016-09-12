@@ -11,8 +11,8 @@ The correlations and linkage disequilibrium between tests can vary as a function
 \tabular{ll}{
 Package: \tab GWsignif\cr
 Type: \tab Package\cr
-Version: \tab 1.1\cr
-Date: \tab 2016-06-19\cr
+Version: \tab 1.2\cr
+Date: \tab 2016-09-10\cr
 License: \tab GLP 2.0 or greater\cr
 }
 }
